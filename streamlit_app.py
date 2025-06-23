@@ -1,34 +1,53 @@
 import streamlit as st
 
-st.title("Simple Factor Tree Practice")
+st.title("Simple Factor Tree Input")
 
-number = 100
-st.write(f"Find the factors step-by-step for: **{number}**")
+st.write("Factor tree for 36")
 
-# Step 1
-f1 = st.number_input("Step 1: Enter a factor of 100", min_value=1, max_value=number, key="f1")
-if f1 != 0 and number % f1 == 0:
-    f2 = number // f1
-    st.write(f"Good! The other factor is **{f2}**.")
-else:
-    st.error("That is not a factor of 100.")
+st.write("        36")
+col1, col2, col3 = st.columns([1, 1, 1])
 
-# Step 2: Factor f1 if not prime and >1
-if f1 > 1 and not st.button("f1 is prime"):
-    st.write(f"Now, factor **{f1}**:")
-    f1a = st.number_input(f"Enter a factor of {f1}", min_value=1, max_value=f1, key="f1a")
-    if f1a != 0 and f1 % f1a == 0:
-        f1b = f1 // f1a
-        st.write(f"The other factor is **{f1b}**.")
+with col1:
+    f1 = st.number_input(" ", key="f1", label_visibility="collapsed")
+with col2:
+    st.write("×")
+with col3:
+    f2 = st.number_input(" ", key="f2", label_visibility="collapsed")
+
+if f1 and f2:
+    if f1 * f2 == 36:
+        st.success("Correct factor pair!")
     else:
-        st.error(f"{f1a} is not a factor of {f1}.")
+        st.error("Try again.")
 
-# Step 3: Factor f2 if not prime and >1
-if 'f2' in locals() and f2 > 1 and not st.button("f2 is prime"):
-    st.write(f"Now, factor **{f2}**:")
-    f2a = st.number_input(f"Enter a factor of {f2}", min_value=1, max_value=f2, key="f2a")
-    if f2a != 0 and f2 % f2a == 0:
-        f2b = f2 // f2a
-        st.write(f"The other factor is **{f2b}**.")
+st.write("Factor further:")
+
+col4, col5, col6, col7 = st.columns([1, 0.2, 1, 0.2])
+
+with col4:
+    f1a = st.number_input(" ", key="f1a", label_visibility="collapsed")
+with col5:
+    st.write("×")
+with col6:
+    f1b = st.number_input(" ", key="f1b", label_visibility="collapsed")
+
+if f1a and f1b:
+    if f1a * f1b == f1:
+        st.success(f"Correct! Factors of {f1}")
     else:
-        st.error(f"{f2a} is not a factor of {f2}.")
+        st.error(f"Try again for {f1}")
+
+# similarly for f2 factorization
+
+with col7:
+    f2a = st.number_input(" ", key="f2a", label_visibility="collapsed")
+with st.columns([0.2]):
+    st.write("×")
+with st.columns([1]):
+    f2b = st.number_input(" ", key="f2b", label_visibility="collapsed")
+
+if f2a and f2b:
+    if f2a * f2b == f2:
+        st.success(f"Correct! Factors of {f2}")
+    else:
+        st.error(f"Try again for {f2}")
