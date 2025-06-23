@@ -1,38 +1,34 @@
 import streamlit as st
 
-st.title("🧮 Interactive Factor Tree Practice")
+st.title("Simple Factor Tree Practice")
 
-numbers = [100, 56, 81, 70]
+number = 100
+st.write(f"Find the factors step-by-step for: **{number}**")
 
-selected = st.selectbox("Choose a number to factor:", numbers)
-
-st.write(f"### Factor tree for {selected}")
-
-# Step 1: First factor pair of selected number
-f1 = st.number_input(f"Step 1: Enter first factor of {selected}", min_value=1, max_value=selected, key="f1")
-f2 = st.number_input(f"Step 1: Enter second factor of {selected}", min_value=1, max_value=selected, key="f2")
-
-if f1 * f2 == selected:
-    st.success("✅ Correct factor pair!")
+# Step 1
+f1 = st.number_input("Step 1: Enter a factor of 100", min_value=1, max_value=number, key="f1")
+if f1 != 0 and number % f1 == 0:
+    f2 = number // f1
+    st.write(f"Good! The other factor is **{f2}**.")
 else:
-    st.error("❌ Factors do not multiply to the original number.")
+    st.error("That is not a factor of 100.")
 
-# Step 2: Factor first factor further if not prime
-if f1 > 1 and f1 != selected:
-    st.write(f"Factor pair for {f1}:")
-    f1a = st.number_input(f"Enter factor 1 of {f1}", min_value=1, max_value=f1, key="f1a")
-    f1b = st.number_input(f"Enter factor 2 of {f1}", min_value=1, max_value=f1, key="f1b")
-    if f1a * f1b == f1:
-        st.success("✅ Correct!")
+# Step 2: Factor f1 if not prime and >1
+if f1 > 1 and not st.button("f1 is prime"):
+    st.write(f"Now, factor **{f1}**:")
+    f1a = st.number_input(f"Enter a factor of {f1}", min_value=1, max_value=f1, key="f1a")
+    if f1a != 0 and f1 % f1a == 0:
+        f1b = f1 // f1a
+        st.write(f"The other factor is **{f1b}**.")
     else:
-        st.error("❌ Incorrect factors.")
+        st.error(f"{f1a} is not a factor of {f1}.")
 
-# Step 3: Factor second factor further if not prime
-if f2 > 1 and f2 != selected:
-    st.write(f"Factor pair for {f2}:")
-    f2a = st.number_input(f"Enter factor 1 of {f2}", min_value=1, max_value=f2, key="f2a")
-    f2b = st.number_input(f"Enter factor 2 of {f2}", min_value=1, max_value=f2, key="f2b")
-    if f2a * f2b == f2:
-        st.success("✅ Correct!")
+# Step 3: Factor f2 if not prime and >1
+if 'f2' in locals() and f2 > 1 and not st.button("f2 is prime"):
+    st.write(f"Now, factor **{f2}**:")
+    f2a = st.number_input(f"Enter a factor of {f2}", min_value=1, max_value=f2, key="f2a")
+    if f2a != 0 and f2 % f2a == 0:
+        f2b = f2 // f2a
+        st.write(f"The other factor is **{f2b}**.")
     else:
-        st.error("❌ Incorrect factors.")
+        st.error(f"{f2a} is not a factor of {f2}.")
